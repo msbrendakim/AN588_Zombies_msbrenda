@@ -193,13 +193,32 @@ hist(years_of_education, freq = FALSE, main = "years of education", xlab = "year
     ylab = "density", ylim = c(0, 0.3))
 ```
 
-Looking at these histograms,
+```{r}
+par(mfrow = c(2, 3))
+
+qqnorm(z$height, main = "height")
+qqline(z$height, col = "darkblue")
+
+qqnorm(z$weight, main = "weight")
+qqline(z$weight, col = "darkblue")
+
+qqnorm(z$age, main = "age")
+qqline(z$age, col = "darkblue")
+
+qqnorm(z$zombies_killed, main = "zombies killed")
+qqline(z$zombies_killed, col = "darkblue")
+
+qqnorm(z$years_of_education, main = "years of education")
+qqline(z$years_of_education, col = "darkblue")
+```
+
+Looking at these histograms and plots,
 
 -   **Height & Age**: Look pretty normal—nice bell curves and Q-Q points hug the line.
 
 -   **Weight**: Mostly normal, but a little skewed to the right.
 
--   **Zombies Killed & Education**: Not normal! They’re discrete and skewed—maybe Bernoulli-like, since they’re counts.
+-   **Zombies Killed & Education**: Not normal! They’re discrete and skewed.
 
 ------------------------------------------------------------------------
 
@@ -273,14 +292,31 @@ Now, 99 more samples of 30 survivors to make 100 total. We’ll check the means,
 100 samples:
 
 ```{r}
+# compute the means from Task 5
+first_sample <- c(
+  mean(samp_30$height),
+  mean(samp_30$weight),
+  mean(samp_30$age),
+  mean(samp_30$zombies_killed),
+  mean(samp_30$years_of_education)
+)
+
+# generate 99 additional samples
 set.seed(999)
 samp_means <- list(
-  height = replicate(100, mean(sample(z$height, 30))),
-  weight = replicate(100, mean(sample(z$weight, 30))),
-  age = replicate(100, mean(sample(z$age, 30))),
-  zombies_killed = replicate(100, mean(sample(z$zombies_killed, 30))),
-  education = replicate(100, mean(sample(z$years_of_education, 30)))
+  height = replicate(99, mean(sample(z$height, 30))),
+  weight = replicate(99, mean(sample(z$weight, 30))),
+  age = replicate(99, mean(sample(z$age, 30))),
+  zombies_killed = replicate(99, mean(sample(z$zombies_killed, 30))),
+  education = replicate(99, mean(sample(z$years_of_education, 30)))
 )
+
+# prepend the first sample's means to each variable's vector to make 100 total means
+samp_means$height <- c(first_sample[1], samp_means$height)
+samp_means$weight <- c(first_sample[2], samp_means$weight)
+samp_means$age <- c(first_sample[3], samp_means$age)
+samp_means$zombies_killed <- c(first_sample[4], samp_means$zombies_killed)
+samp_means$education <- c(first_sample[5], samp_means$education)
 ```
 
 Height distribution:
@@ -320,15 +356,15 @@ tibble(Mean = mean(samp_means$education), "Std Dev" = sd(samp_means$education))
 
 -   How do the standard deviations of means compare to the standard errors estimated in \[5\]?
 
-    -   Height: Task 5 SE = 0.795, here it's 0.657
+    -   Height: Task 5 SE = 0.795, here it's 0.650
 
-    -   Weight: Task 5 SE = 3.6, here it's 3.56
+    -   Weight: Task 5 SE = 3.6, here it's 3.50
 
-    -   Age: Task 5 SE = 0.441, here it's 0.564
+    -   Age: Task 5 SE = 0.441, here it's 0.572
 
-    -   Zombies Killed: Task 5 SE = 0.328, here it's 0.315
+    -   Zombies Killed: Task 5 SE = 0.328, here it's 0.319
 
-    -   Years of Education: Task 5 SE = 0.269, here it's 0.358
+    -   Years of Education: Task 5 SE = 0.269, here it's 0.351
 
     The standard deviations vary slightly from Task 5’s standard errors, which is expected due to differences in sample size and variability across 100 samples.
 
