@@ -1,0 +1,361 @@
+---
+title: "msbrenda_OriginalHomeworkCode_03"
+format: html
+editor: visual
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(curl)
+library(tidyverse)
+library(ggplot2)
+library(sciplot)
+```
+
+## 🧟 Load the Dataset
+
+```{r}
+# Load the dataset
+f <- curl("https://raw.githubusercontent.com/fuzzyatelin/fuzzyatelin.github.io/master/AN588_Fall23/zombies.csv")
+z <- read.csv(f, header = TRUE, sep = ",", stringsAsFactors = FALSE)
+head(z)
+```
+
+------------------------------------------------------------------------
+
+## 🧟 1. Population Mean and Standard Deviation
+
+We need to calculate the population mean and standard deviation for `height`, `weight`, `age`, `zombies_killed`, and `years_of_education`. Since this is the full population, we’ll craft custom functions instead of relying on sample-based `sd()`.
+
+First, let’s define our population variance and standard deviation formulas.
+
+```{r}
+pop_variance <- function(x) sum((x - mean(x))^2) / length(x)
+pop_stdev <- function(x) sqrt(pop_variance(x))
+```
+
+Calculating for height:
+
+```{r}
+height_mean <- mean(z$height)
+height_sd <- pop_stdev(z$height)
+tibble(Mean = height_mean, "Std Dev" = height_sd)
+```
+
+Now for weight:
+
+```{r}
+weight_mean <- mean(z$weight)
+weight_sd <- pop_stdev(z$weight)
+tibble(Mean = weight_mean, "Std Dev" = weight_sd)
+```
+
+Next up, age:
+
+```{r}
+age_mean <- mean(z$age)
+age_sd <- pop_stdev(z$age)
+tibble(Mean = age_mean, "Std Dev" = age_sd)
+```
+
+How many zombies have they taken down?:
+
+```{r}
+zombies_killed_mean <- mean(z$zombies_killed)
+zombies_killed_sd <- pop_stdev(z$zombies_killed)
+tibble(Mean = zombies_killed_mean, "Std Dev" = zombies_killed_sd)
+```
+
+Finally, years of education:
+
+```{r}
+education_mean <- mean(z$years_of_education)
+education_sd <- pop_stdev(z$years_of_education)
+tibble(Mean = education_mean, "Std Dev" = education_sd)
+```
+
+Here’s everything in one neat table:
+
+```{r}
+tibble(
+  Variable = c("Height", "Weight", "Age", "Zombies Killed", "Years of Education"),
+  Mean = c(height_mean, weight_mean, age_mean, zombies_killed_mean, education_mean),
+  "Std Dev" = c(height_sd, weight_sd, age_sd, zombies_killed_sd, education_sd)
+)
+```
+
+------------------------------------------------------------------------
+
+## 🧟 2. Boxplots by Gender
+
+Now let’s see how these traits stack up between genders with some slick boxplots using `{ggplot2}`. Each variable gets its own plot for maximum clarity.
+
+Starting with height:
+
+```{r}
+ggplot(z, aes(x = gender, y = height, fill = gender)) +
+  geom_boxplot() +
+  labs(title = "Height by Gender", y = "Height (in)") +
+  theme_minimal() +
+  scale_fill_manual(values = c("pink", "lightblue", "lavender"))
+```
+
+How about weight?:
+
+```{r}
+ggplot(z, aes(x = gender, y = weight, fill = gender)) +
+  geom_boxplot() +
+  labs(title = "Weight by Gender", y = "Weight (lbs)") +
+  theme_minimal() +
+  scale_fill_manual(values = c("pink", "lightblue", "lavender"))
+```
+
+Age breakdown:
+
+```{r}
+ggplot(z, aes(x = gender, y = age, fill = gender)) +
+  geom_boxplot() +
+  labs(title = "Age by Gender", y = "Age (years)") +
+  theme_minimal() +
+  scale_fill_manual(values = c("pink", "lightblue", "lavender"))
+```
+
+Who is better zombie slayer?:
+
+```{r}
+ggplot(z, aes(x = gender, y = zombies_killed, fill = gender)) +
+  geom_boxplot() +
+  labs(title = "Zombies Killed by Gender", y = "Zombies Killed") +
+  theme_minimal() +
+  scale_fill_manual(values = c("pink", "lightblue", "lavender"))
+```
+
+And their education?:
+
+```{r}
+ggplot(z, aes(x = gender, y = years_of_education, fill = gender)) +
+  geom_boxplot() +
+  labs(title = "Years of Education by Gender", y = "Years of Education") +
+  theme_minimal() +
+  scale_fill_manual(values = c("pink", "lightblue", "lavender"))
+```
+
+------------------------------------------------------------------------
+
+## 🧟 3. Scatterplots: Height and Weight vs. Age
+
+Let’s plot height and weight against age to check for any trends.
+
+First, height:
+
+```{r}
+ggplot(z, aes(x = age, y = height)) +
+  geom_point(color = "darkblue", alpha = 0.5) +
+  geom_smooth(method = "lm", color = "black", se = FALSE) +
+  labs(title = "Height vs. Age", x = "Age (years)", y = "Height (in)") +
+  theme_minimal()
+```
+
+Now, weight:
+
+```{r}
+ggplot(z, aes(x = age, y = weight)) +
+  geom_point(color = "darkred", alpha = 0.5) +
+  geom_smooth(method = "lm", color = "red", se = FALSE) +
+  labs(title = "Weight vs. Age", x = "Age (years)", y = "Weight (lbs)") +
+  theme_minimal()
+```
+
+Looking at these plots,
+
+-   **Height**: There’s a slight upward trend—older survivors tend to be a bit taller. The black line shows a gentle positive slope.
+
+-   **Weight**: Also a positive trend, but it’s weaker than height. Older folks might carry a little more weight, but it’s not as clear-cut.
+
+------------------------------------------------------------------------
+
+## 🧟 4. Checking Normality with Histograms and Q-Q Plots
+
+Using histograms and Q-Q plots, let's check whether the quantitative variables seem to be drawn from a normal distribution.
+
+```{r}
+par(mfrow = c(2, 3))
+attach(z)
+hist(height, freq = FALSE, main = "height", xlab = "height", 
+    ylab = "density", ylim = c(0, 0.3))
+hist(weight, freq = FALSE, main = "weight", xlab = "weight", 
+    ylab = "density", ylim = c(0, 0.3))
+hist(age, freq = FALSE, main = "age", xlab = "age", 
+    ylab = "density", ylim = c(0, 0.3))
+hist(zombies_killed, freq = FALSE, main = "zombies killed", xlab = "zombies killed", 
+    ylab = "density", ylim = c(0, 0.3))
+hist(years_of_education, freq = FALSE, main = "years of education", xlab = "years of education", 
+    ylab = "density", ylim = c(0, 0.3))
+```
+
+Looking at these histograms,
+
+-   **Height & Age**: Look pretty normal—nice bell curves and Q-Q points hug the line.
+
+-   **Weight**: Mostly normal, but a little skewed to the right.
+
+-   **Zombies Killed & Education**: Not normal! They’re discrete and skewed—maybe Bernoulli-like, since they’re counts.
+
+------------------------------------------------------------------------
+
+## 🧟 5. Sampling 30 Survivors
+
+Let’s grab one sample of 30 survivors (no replacement) and calculate means, standard deviations, standard errors, and 95% confidence intervals.
+
+```{r}
+set.seed(999) # For repeatability
+samp_30 <- z[sample(nrow(z), 30, replace = FALSE), ] # One sample
+```
+
+Height:
+
+```{r}
+h_mean <- mean(samp_30$height)
+h_sd <- sd(samp_30$height)
+h_se <- h_sd / sqrt(30)
+h_ci <- h_mean + qnorm(c(0.025, 0.975)) * h_se
+tibble(Mean = h_mean, "Std Dev" = h_sd, "Std Err" = h_se, "CI Lower" = h_ci[1], "CI Upper" = h_ci[2])
+```
+
+Weight:
+
+```{r}
+w_mean <- mean(samp_30$weight)
+w_sd <- sd(samp_30$weight)
+w_se <- w_sd / sqrt(30)
+w_ci <- w_mean + qnorm(c(0.025, 0.975)) * w_se
+tibble(Mean = w_mean, "Std Dev" = w_sd, "Std Err" = w_se, "CI Lower" = w_ci[1], "CI Upper" = w_ci[2])
+```
+
+Age:
+
+```{r}
+a_mean <- mean(samp_30$age)
+a_sd <- sd(samp_30$age)
+a_se <- a_sd / sqrt(30)
+a_ci <- a_mean + qnorm(c(0.025, 0.975)) * a_se
+tibble(Mean = a_mean, "Std Dev" = a_sd, "Std Err" = a_se, "CI Lower" = a_ci[1], "CI Upper" = a_ci[2])
+```
+
+Zombies Killed:
+
+```{r}
+zk_mean <- mean(samp_30$zombies_killed)
+zk_sd <- sd(samp_30$zombies_killed)
+zk_se <- zk_sd / sqrt(30)
+zk_boot <- replicate(10000, mean(sample(samp_30$zombies_killed, 15, replace = TRUE)))
+zk_ci <- quantile(zk_boot, c(0.025, 0.975))
+tibble(Mean = zk_mean, "Std Dev" = zk_sd, "Std Err" = zk_se, "CI Lower" = zk_ci[1], "CI Upper" = zk_ci[2])
+```
+
+Years of Education:
+
+```{r}
+edu_mean <- mean(samp_30$years_of_education)
+edu_sd <- sd(samp_30$years_of_education)
+edu_se <- edu_sd / sqrt(30)
+edu_boot <- replicate(10000, mean(sample(samp_30$years_of_education, 15, replace = TRUE)))
+edu_ci <- quantile(edu_boot, c(0.025, 0.975))
+tibble(Mean = edu_mean, "Std Dev" = edu_sd, "Std Err" = edu_se, "CI Lower" = edu_ci[1], "CI Upper" = edu_ci[2])
+```
+
+------------------------------------------------------------------------
+
+## 🧟 6. Sampling Distribution of 100 Means
+
+Now, 99 more samples of 30 survivors to make 100 total. We’ll check the means, SDs, and shapes of these sampling distributions.
+
+100 samples:
+
+```{r}
+set.seed(999)
+samp_means <- list(
+  height = replicate(100, mean(sample(z$height, 30))),
+  weight = replicate(100, mean(sample(z$weight, 30))),
+  age = replicate(100, mean(sample(z$age, 30))),
+  zombies_killed = replicate(100, mean(sample(z$zombies_killed, 30))),
+  education = replicate(100, mean(sample(z$years_of_education, 30)))
+)
+```
+
+Height distribution:
+
+```{r}
+hist(samp_means$height, prob = TRUE, main = "Height Means", xlab = "Mean Height", col = "lightgreen")
+tibble(Mean = mean(samp_means$height), "Std Dev" = sd(samp_means$height))
+```
+
+Weight distribution:
+
+```{r}
+hist(samp_means$weight, prob = TRUE, main = "Weight Means", xlab = "Mean Weight", col = "lightgreen")
+tibble(Mean = mean(samp_means$weight), "Std Dev" = sd(samp_means$weight))
+```
+
+Age distribution:
+
+```{r}
+hist(samp_means$age, prob = TRUE, main = "Age Means", xlab = "Mean Age", col = "lightgreen")
+tibble(Mean = mean(samp_means$age), "Std Dev" = sd(samp_means$age))
+```
+
+Zombies Killed distribution:
+
+```{r}
+hist(samp_means$zombies_killed, prob = TRUE, main = "Zombies Killed Means", xlab = "Mean Zombies Killed", col = "lightgreen")
+tibble(Mean = mean(samp_means$zombies_killed), "Std Dev" = sd(samp_means$zombies_killed))
+```
+
+Education distribution:
+
+```{r}
+hist(samp_means$education, prob = TRUE, main = "Education Means", xlab = "Mean Years of Education", col = "lightgreen")
+tibble(Mean = mean(samp_means$education), "Std Dev" = sd(samp_means$education))
+```
+
+-   How do the standard deviations of means compare to the standard errors estimated in \[5\]?
+
+    -   Height: Task 5 SE = 0.795, here it's 0.657
+
+    -   Weight: Task 5 SE = 3.6, here it's 3.56
+
+    -   Age: Task 5 SE = 0.441, here it's 0.564
+
+    -   Zombies Killed: Task 5 SE = 0.328, here it's 0.315
+
+    -   Years of Education: Task 5 SE = 0.269, here it's 0.358
+
+    The standard deviations vary slightly from Task 5’s standard errors, which is expected due to differences in sample size and variability across 100 samples.
+
+-   What do these sampling distributions look like?
+
+    The histograms above show the distributions of means for each variable. They are generally centered around their respective means but vary in symmetry and spread.
+
+-   Are they normally distributed?
+
+    The sampling distributions are not all perfectly normal:
+
+    -   Height: The histogram shows a slight left skew, with more values on the right side—not a perfect bell shape.
+
+    -   Weight: Slightly left-skewed, with a longer tail on the left—not fully symmetric.
+
+    -   Age: Also left-skewed, with a noticeable tail on the left side.
+
+    -   Zombies Killed: Fairly symmetric but with some irregularity—not a smooth bell curve.
+
+    -   Years of Education: Slightly right-skewed, with a longer tail on the right.
+
+    While the Central Limit Theorem suggests these distributions should approach normality with enough samples, with only 100 samples of size 30, they still exhibit some skewness and irregularity.
+
+-   What about for those variables that you concluded were not originally drawn from a normal distribution?
+
+    -   Zombies Killed: Originally non-normal (discrete and skewed), its sampling distribution is somewhat symmetric but still shows irregularities, indicating it’s not fully normal yet.
+
+    -   Years of Education: Also non-normal originally, its sampling distribution has a slight right skew, so it’s not perfectly normal either.
+
+    With 100 samples, the Central Limit Theorem is starting to take effect, but these distributions are not yet fully normal due to the limited number of samples and the original non-normality of the data.
