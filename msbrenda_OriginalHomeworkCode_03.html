@@ -360,11 +360,36 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>Looking at these histograms,</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(z<span class="sc">$</span>height, <span class="at">main =</span> <span class="st">"height"</span>)</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(z<span class="sc">$</span>height, <span class="at">col =</span> <span class="st">"darkblue"</span>)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(z<span class="sc">$</span>weight, <span class="at">main =</span> <span class="st">"weight"</span>)</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(z<span class="sc">$</span>weight, <span class="at">col =</span> <span class="st">"darkblue"</span>)</span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(z<span class="sc">$</span>age, <span class="at">main =</span> <span class="st">"age"</span>)</span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(z<span class="sc">$</span>age, <span class="at">col =</span> <span class="st">"darkblue"</span>)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-12"><a href="#cb26-12" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(z<span class="sc">$</span>zombies_killed, <span class="at">main =</span> <span class="st">"zombies killed"</span>)</span>
+<span id="cb26-13"><a href="#cb26-13" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(z<span class="sc">$</span>zombies_killed, <span class="at">col =</span> <span class="st">"darkblue"</span>)</span>
+<span id="cb26-14"><a href="#cb26-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-15"><a href="#cb26-15" aria-hidden="true" tabindex="-1"></a><span class="fu">qqnorm</span>(z<span class="sc">$</span>years_of_education, <span class="at">main =</span> <span class="st">"years of education"</span>)</span>
+<span id="cb26-16"><a href="#cb26-16" aria-hidden="true" tabindex="-1"></a><span class="fu">qqline</span>(z<span class="sc">$</span>years_of_education, <span class="at">col =</span> <span class="st">"darkblue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="msbrenda_OriginalHomeworkCode_03_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>Looking at these histograms and plots,</p>
 <ul>
 <li><p><strong>Height &amp; Age</strong>: Look pretty normal—nice bell curves and Q-Q points hug the line.</p></li>
 <li><p><strong>Weight</strong>: Mostly normal, but a little skewed to the right.</p></li>
-<li><p><strong>Zombies Killed &amp; Education</strong>: Not normal! They’re discrete and skewed—maybe Bernoulli-like, since they’re counts.</p></li>
+<li><p><strong>Zombies Killed &amp; Education</strong>: Not normal! They’re discrete and skewed.</p></li>
 </ul>
 <hr>
 </section>
@@ -372,16 +397,16 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h2 class="anchored" data-anchor-id="sampling-30-survivors">🧟 5. Sampling 30 Survivors</h2>
 <p>Let’s grab one sample of 30 survivors (no replacement) and calculate means, standard deviations, standard errors, and 95% confidence intervals.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">999</span>) <span class="co"># For repeatability</span></span>
-<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>samp_30 <span class="ot">&lt;-</span> z[<span class="fu">sample</span>(<span class="fu">nrow</span>(z), <span class="dv">30</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>), ] <span class="co"># One sample</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">999</span>) <span class="co"># For repeatability</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>samp_30 <span class="ot">&lt;-</span> z[<span class="fu">sample</span>(<span class="fu">nrow</span>(z), <span class="dv">30</span>, <span class="at">replace =</span> <span class="cn">FALSE</span>), ] <span class="co"># One sample</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Height:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>h_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_30<span class="sc">$</span>height)</span>
-<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>h_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_30<span class="sc">$</span>height)</span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>h_se <span class="ot">&lt;-</span> h_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>h_ci <span class="ot">&lt;-</span> h_mean <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">*</span> h_se</span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> h_mean, <span class="st">"Std Dev"</span> <span class="ot">=</span> h_sd, <span class="st">"Std Err"</span> <span class="ot">=</span> h_se, <span class="st">"CI Lower"</span> <span class="ot">=</span> h_ci[<span class="dv">1</span>], <span class="st">"CI Upper"</span> <span class="ot">=</span> h_ci[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a>h_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_30<span class="sc">$</span>height)</span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>h_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_30<span class="sc">$</span>height)</span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>h_se <span class="ot">&lt;-</span> h_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>h_ci <span class="ot">&lt;-</span> h_mean <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">*</span> h_se</span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> h_mean, <span class="st">"Std Dev"</span> <span class="ot">=</span> h_sd, <span class="st">"Std Err"</span> <span class="ot">=</span> h_se, <span class="st">"CI Lower"</span> <span class="ot">=</span> h_ci[<span class="dv">1</span>], <span class="st">"CI Upper"</span> <span class="ot">=</span> h_ci[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 5
    Mean `Std Dev` `Std Err` `CI Lower` `CI Upper`
@@ -391,11 +416,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Weight:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>w_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_30<span class="sc">$</span>weight)</span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>w_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_30<span class="sc">$</span>weight)</span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>w_se <span class="ot">&lt;-</span> w_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>w_ci <span class="ot">&lt;-</span> w_mean <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">*</span> w_se</span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> w_mean, <span class="st">"Std Dev"</span> <span class="ot">=</span> w_sd, <span class="st">"Std Err"</span> <span class="ot">=</span> w_se, <span class="st">"CI Lower"</span> <span class="ot">=</span> w_ci[<span class="dv">1</span>], <span class="st">"CI Upper"</span> <span class="ot">=</span> w_ci[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a>w_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_30<span class="sc">$</span>weight)</span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>w_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_30<span class="sc">$</span>weight)</span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>w_se <span class="ot">&lt;-</span> w_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>w_ci <span class="ot">&lt;-</span> w_mean <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">*</span> w_se</span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> w_mean, <span class="st">"Std Dev"</span> <span class="ot">=</span> w_sd, <span class="st">"Std Err"</span> <span class="ot">=</span> w_se, <span class="st">"CI Lower"</span> <span class="ot">=</span> w_ci[<span class="dv">1</span>], <span class="st">"CI Upper"</span> <span class="ot">=</span> w_ci[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 5
    Mean `Std Dev` `Std Err` `CI Lower` `CI Upper`
@@ -405,11 +430,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Age:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>a_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_30<span class="sc">$</span>age)</span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>a_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_30<span class="sc">$</span>age)</span>
-<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>a_se <span class="ot">&lt;-</span> a_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
-<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>a_ci <span class="ot">&lt;-</span> a_mean <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">*</span> a_se</span>
-<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> a_mean, <span class="st">"Std Dev"</span> <span class="ot">=</span> a_sd, <span class="st">"Std Err"</span> <span class="ot">=</span> a_se, <span class="st">"CI Lower"</span> <span class="ot">=</span> a_ci[<span class="dv">1</span>], <span class="st">"CI Upper"</span> <span class="ot">=</span> a_ci[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>a_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_30<span class="sc">$</span>age)</span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>a_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_30<span class="sc">$</span>age)</span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>a_se <span class="ot">&lt;-</span> a_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>a_ci <span class="ot">&lt;-</span> a_mean <span class="sc">+</span> <span class="fu">qnorm</span>(<span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>)) <span class="sc">*</span> a_se</span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> a_mean, <span class="st">"Std Dev"</span> <span class="ot">=</span> a_sd, <span class="st">"Std Err"</span> <span class="ot">=</span> a_se, <span class="st">"CI Lower"</span> <span class="ot">=</span> a_ci[<span class="dv">1</span>], <span class="st">"CI Upper"</span> <span class="ot">=</span> a_ci[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 5
    Mean `Std Dev` `Std Err` `CI Lower` `CI Upper`
@@ -419,12 +444,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Zombies Killed:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>zk_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_30<span class="sc">$</span>zombies_killed)</span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>zk_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_30<span class="sc">$</span>zombies_killed)</span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>zk_se <span class="ot">&lt;-</span> zk_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>zk_boot <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(samp_30<span class="sc">$</span>zombies_killed, <span class="dv">15</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>zk_ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(zk_boot, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
-<span id="cb33-6"><a href="#cb33-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> zk_mean, <span class="st">"Std Dev"</span> <span class="ot">=</span> zk_sd, <span class="st">"Std Err"</span> <span class="ot">=</span> zk_se, <span class="st">"CI Lower"</span> <span class="ot">=</span> zk_ci[<span class="dv">1</span>], <span class="st">"CI Upper"</span> <span class="ot">=</span> zk_ci[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>zk_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_30<span class="sc">$</span>zombies_killed)</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a>zk_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_30<span class="sc">$</span>zombies_killed)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a>zk_se <span class="ot">&lt;-</span> zk_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>zk_boot <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(samp_30<span class="sc">$</span>zombies_killed, <span class="dv">15</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a>zk_ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(zk_boot, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> zk_mean, <span class="st">"Std Dev"</span> <span class="ot">=</span> zk_sd, <span class="st">"Std Err"</span> <span class="ot">=</span> zk_se, <span class="st">"CI Lower"</span> <span class="ot">=</span> zk_ci[<span class="dv">1</span>], <span class="st">"CI Upper"</span> <span class="ot">=</span> zk_ci[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 5
    Mean `Std Dev` `Std Err` `CI Lower` `CI Upper`
@@ -434,12 +459,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 <p>Years of Education:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>edu_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_30<span class="sc">$</span>years_of_education)</span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>edu_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_30<span class="sc">$</span>years_of_education)</span>
-<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>edu_se <span class="ot">&lt;-</span> edu_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
-<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>edu_boot <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(samp_30<span class="sc">$</span>years_of_education, <span class="dv">15</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
-<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>edu_ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(edu_boot, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
-<span id="cb35-6"><a href="#cb35-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> edu_mean, <span class="st">"Std Dev"</span> <span class="ot">=</span> edu_sd, <span class="st">"Std Err"</span> <span class="ot">=</span> edu_se, <span class="st">"CI Lower"</span> <span class="ot">=</span> edu_ci[<span class="dv">1</span>], <span class="st">"CI Upper"</span> <span class="ot">=</span> edu_ci[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>edu_mean <span class="ot">&lt;-</span> <span class="fu">mean</span>(samp_30<span class="sc">$</span>years_of_education)</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>edu_sd <span class="ot">&lt;-</span> <span class="fu">sd</span>(samp_30<span class="sc">$</span>years_of_education)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>edu_se <span class="ot">&lt;-</span> edu_sd <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="dv">30</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>edu_boot <span class="ot">&lt;-</span> <span class="fu">replicate</span>(<span class="dv">10000</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(samp_30<span class="sc">$</span>years_of_education, <span class="dv">15</span>, <span class="at">replace =</span> <span class="cn">TRUE</span>)))</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a>edu_ci <span class="ot">&lt;-</span> <span class="fu">quantile</span>(edu_boot, <span class="fu">c</span>(<span class="fl">0.025</span>, <span class="fl">0.975</span>))</span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> edu_mean, <span class="st">"Std Dev"</span> <span class="ot">=</span> edu_sd, <span class="st">"Std Err"</span> <span class="ot">=</span> edu_se, <span class="st">"CI Lower"</span> <span class="ot">=</span> edu_ci[<span class="dv">1</span>], <span class="st">"CI Upper"</span> <span class="ot">=</span> edu_ci[<span class="dv">2</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 5
    Mean `Std Dev` `Std Err` `CI Lower` `CI Upper`
@@ -454,36 +479,35 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Now, 99 more samples of 30 survivors to make 100 total. We’ll check the means, SDs, and shapes of these sampling distributions.</p>
 <p>100 samples:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">999</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>samp_means <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(z<span class="sc">$</span>height, <span class="dv">30</span>))),</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight =</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(z<span class="sc">$</span>weight, <span class="dv">30</span>))),</span>
-<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(z<span class="sc">$</span>age, <span class="dv">30</span>))),</span>
-<span id="cb37-6"><a href="#cb37-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">zombies_killed =</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(z<span class="sc">$</span>zombies_killed, <span class="dv">30</span>))),</span>
-<span id="cb37-7"><a href="#cb37-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">education =</span> <span class="fu">replicate</span>(<span class="dv">100</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(z<span class="sc">$</span>years_of_education, <span class="dv">30</span>)))</span>
-<span id="cb37-8"><a href="#cb37-8" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># compute the means from Task 5</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>first_sample <span class="ot">&lt;-</span> <span class="fu">c</span>(</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(samp_30<span class="sc">$</span>height),</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(samp_30<span class="sc">$</span>weight),</span>
+<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(samp_30<span class="sc">$</span>age),</span>
+<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(samp_30<span class="sc">$</span>zombies_killed),</span>
+<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mean</span>(samp_30<span class="sc">$</span>years_of_education)</span>
+<span id="cb38-8"><a href="#cb38-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-9"><a href="#cb38-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-10"><a href="#cb38-10" aria-hidden="true" tabindex="-1"></a><span class="co"># generate 99 additional samples</span></span>
+<span id="cb38-11"><a href="#cb38-11" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">999</span>)</span>
+<span id="cb38-12"><a href="#cb38-12" aria-hidden="true" tabindex="-1"></a>samp_means <span class="ot">&lt;-</span> <span class="fu">list</span>(</span>
+<span id="cb38-13"><a href="#cb38-13" aria-hidden="true" tabindex="-1"></a>  <span class="at">height =</span> <span class="fu">replicate</span>(<span class="dv">99</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(z<span class="sc">$</span>height, <span class="dv">30</span>))),</span>
+<span id="cb38-14"><a href="#cb38-14" aria-hidden="true" tabindex="-1"></a>  <span class="at">weight =</span> <span class="fu">replicate</span>(<span class="dv">99</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(z<span class="sc">$</span>weight, <span class="dv">30</span>))),</span>
+<span id="cb38-15"><a href="#cb38-15" aria-hidden="true" tabindex="-1"></a>  <span class="at">age =</span> <span class="fu">replicate</span>(<span class="dv">99</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(z<span class="sc">$</span>age, <span class="dv">30</span>))),</span>
+<span id="cb38-16"><a href="#cb38-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">zombies_killed =</span> <span class="fu">replicate</span>(<span class="dv">99</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(z<span class="sc">$</span>zombies_killed, <span class="dv">30</span>))),</span>
+<span id="cb38-17"><a href="#cb38-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">education =</span> <span class="fu">replicate</span>(<span class="dv">99</span>, <span class="fu">mean</span>(<span class="fu">sample</span>(z<span class="sc">$</span>years_of_education, <span class="dv">30</span>)))</span>
+<span id="cb38-18"><a href="#cb38-18" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb38-19"><a href="#cb38-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb38-20"><a href="#cb38-20" aria-hidden="true" tabindex="-1"></a><span class="co"># prepend the first sample's means to each variable's vector to make 100 total means</span></span>
+<span id="cb38-21"><a href="#cb38-21" aria-hidden="true" tabindex="-1"></a>samp_means<span class="sc">$</span>height <span class="ot">&lt;-</span> <span class="fu">c</span>(first_sample[<span class="dv">1</span>], samp_means<span class="sc">$</span>height)</span>
+<span id="cb38-22"><a href="#cb38-22" aria-hidden="true" tabindex="-1"></a>samp_means<span class="sc">$</span>weight <span class="ot">&lt;-</span> <span class="fu">c</span>(first_sample[<span class="dv">2</span>], samp_means<span class="sc">$</span>weight)</span>
+<span id="cb38-23"><a href="#cb38-23" aria-hidden="true" tabindex="-1"></a>samp_means<span class="sc">$</span>age <span class="ot">&lt;-</span> <span class="fu">c</span>(first_sample[<span class="dv">3</span>], samp_means<span class="sc">$</span>age)</span>
+<span id="cb38-24"><a href="#cb38-24" aria-hidden="true" tabindex="-1"></a>samp_means<span class="sc">$</span>zombies_killed <span class="ot">&lt;-</span> <span class="fu">c</span>(first_sample[<span class="dv">4</span>], samp_means<span class="sc">$</span>zombies_killed)</span>
+<span id="cb38-25"><a href="#cb38-25" aria-hidden="true" tabindex="-1"></a>samp_means<span class="sc">$</span>education <span class="ot">&lt;-</span> <span class="fu">c</span>(first_sample[<span class="dv">5</span>], samp_means<span class="sc">$</span>education)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Height distribution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(samp_means<span class="sc">$</span>height, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Height Means"</span>, <span class="at">xlab =</span> <span class="st">"Mean Height"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="msbrenda_OriginalHomeworkCode_03_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid figure-img" width="672"></p>
-</figure>
-</div>
-</div>
-<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(samp_means<span class="sc">$</span>height), <span class="st">"Std Dev"</span> <span class="ot">=</span> <span class="fu">sd</span>(samp_means<span class="sc">$</span>height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 1 × 2
-   Mean `Std Dev`
-  &lt;dbl&gt;     &lt;dbl&gt;
-1  67.6     0.657</code></pre>
-</div>
-</div>
-<p>Weight distribution:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(samp_means<span class="sc">$</span>weight, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Weight Means"</span>, <span class="at">xlab =</span> <span class="st">"Mean Weight"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(samp_means<span class="sc">$</span>height, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Height Means"</span>, <span class="at">xlab =</span> <span class="st">"Mean Height"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -491,17 +515,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(samp_means<span class="sc">$</span>weight), <span class="st">"Std Dev"</span> <span class="ot">=</span> <span class="fu">sd</span>(samp_means<span class="sc">$</span>weight))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(samp_means<span class="sc">$</span>height), <span class="st">"Std Dev"</span> <span class="ot">=</span> <span class="fu">sd</span>(samp_means<span class="sc">$</span>height))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
    Mean `Std Dev`
   &lt;dbl&gt;     &lt;dbl&gt;
-1  144.      3.56</code></pre>
+1  67.6     0.650</code></pre>
 </div>
 </div>
-<p>Age distribution:</p>
+<p>Weight distribution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(samp_means<span class="sc">$</span>age, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Age Means"</span>, <span class="at">xlab =</span> <span class="st">"Mean Age"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(samp_means<span class="sc">$</span>weight, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Weight Means"</span>, <span class="at">xlab =</span> <span class="st">"Mean Weight"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -509,17 +533,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(samp_means<span class="sc">$</span>age), <span class="st">"Std Dev"</span> <span class="ot">=</span> <span class="fu">sd</span>(samp_means<span class="sc">$</span>age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(samp_means<span class="sc">$</span>weight), <span class="st">"Std Dev"</span> <span class="ot">=</span> <span class="fu">sd</span>(samp_means<span class="sc">$</span>weight))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
    Mean `Std Dev`
   &lt;dbl&gt;     &lt;dbl&gt;
-1  20.0     0.564</code></pre>
+1  144.      3.50</code></pre>
 </div>
 </div>
-<p>Zombies Killed distribution:</p>
+<p>Age distribution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(samp_means<span class="sc">$</span>zombies_killed, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Zombies Killed Means"</span>, <span class="at">xlab =</span> <span class="st">"Mean Zombies Killed"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(samp_means<span class="sc">$</span>age, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Age Means"</span>, <span class="at">xlab =</span> <span class="st">"Mean Age"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -527,17 +551,17 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(samp_means<span class="sc">$</span>zombies_killed), <span class="st">"Std Dev"</span> <span class="ot">=</span> <span class="fu">sd</span>(samp_means<span class="sc">$</span>zombies_killed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(samp_means<span class="sc">$</span>age), <span class="st">"Std Dev"</span> <span class="ot">=</span> <span class="fu">sd</span>(samp_means<span class="sc">$</span>age))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
    Mean `Std Dev`
   &lt;dbl&gt;     &lt;dbl&gt;
-1  2.99     0.315</code></pre>
+1  20.0     0.572</code></pre>
 </div>
 </div>
-<p>Education distribution:</p>
+<p>Zombies Killed distribution:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(samp_means<span class="sc">$</span>education, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Education Means"</span>, <span class="at">xlab =</span> <span class="st">"Mean Years of Education"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(samp_means<span class="sc">$</span>zombies_killed, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Zombies Killed Means"</span>, <span class="at">xlab =</span> <span class="st">"Mean Zombies Killed"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <div>
 <figure class="figure">
@@ -545,22 +569,40 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </figure>
 </div>
 </div>
-<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(samp_means<span class="sc">$</span>education), <span class="st">"Std Dev"</span> <span class="ot">=</span> <span class="fu">sd</span>(samp_means<span class="sc">$</span>education))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb49"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(samp_means<span class="sc">$</span>zombies_killed), <span class="st">"Std Dev"</span> <span class="ot">=</span> <span class="fu">sd</span>(samp_means<span class="sc">$</span>zombies_killed))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 2
    Mean `Std Dev`
   &lt;dbl&gt;     &lt;dbl&gt;
-1  3.04     0.358</code></pre>
+1  2.98     0.319</code></pre>
+</div>
+</div>
+<p>Education distribution:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb51"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1" aria-hidden="true" tabindex="-1"></a><span class="fu">hist</span>(samp_means<span class="sc">$</span>education, <span class="at">prob =</span> <span class="cn">TRUE</span>, <span class="at">main =</span> <span class="st">"Education Means"</span>, <span class="at">xlab =</span> <span class="st">"Mean Years of Education"</span>, <span class="at">col =</span> <span class="st">"lightgreen"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="msbrenda_OriginalHomeworkCode_03_files/figure-html/unnamed-chunk-29-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="at">Mean =</span> <span class="fu">mean</span>(samp_means<span class="sc">$</span>education), <span class="st">"Std Dev"</span> <span class="ot">=</span> <span class="fu">sd</span>(samp_means<span class="sc">$</span>education))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+   Mean `Std Dev`
+  &lt;dbl&gt;     &lt;dbl&gt;
+1  3.04     0.351</code></pre>
 </div>
 </div>
 <ul>
 <li><p>How do the standard deviations of means compare to the standard errors estimated in [5]?</p>
 <ul>
-<li><p>Height: Task 5 SE = 0.795, here it’s 0.657</p></li>
-<li><p>Weight: Task 5 SE = 3.6, here it’s 3.56</p></li>
-<li><p>Age: Task 5 SE = 0.441, here it’s 0.564</p></li>
-<li><p>Zombies Killed: Task 5 SE = 0.328, here it’s 0.315</p></li>
-<li><p>Years of Education: Task 5 SE = 0.269, here it’s 0.358</p></li>
+<li><p>Height: Task 5 SE = 0.795, here it’s 0.650</p></li>
+<li><p>Weight: Task 5 SE = 3.6, here it’s 3.50</p></li>
+<li><p>Age: Task 5 SE = 0.441, here it’s 0.572</p></li>
+<li><p>Zombies Killed: Task 5 SE = 0.328, here it’s 0.319</p></li>
+<li><p>Years of Education: Task 5 SE = 0.269, here it’s 0.351</p></li>
 </ul>
 <p>The standard deviations vary slightly from Task 5’s standard errors, which is expected due to differences in sample size and variability across 100 samples.</p></li>
 <li><p>What do these sampling distributions look like?</p>
